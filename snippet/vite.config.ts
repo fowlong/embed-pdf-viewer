@@ -1,42 +1,34 @@
-import { resolve, dirname } from 'path';
+import { resolve } from 'path';
 import { defineConfig, Plugin } from 'vite';
 import dts from 'vite-plugin-dts';
-import fs from 'fs';
 import postcss from 'postcss';
 import autoprefixer from 'autoprefixer';
 import tailwindcss from '@tailwindcss/postcss';
+import fs from 'fs';
 
-// Plugin to import CSS as a string (for inline styles)
-function cssAsString(): Plugin {
+// Plugin to process CSS with PostCSS and return as string
+function cssToString(): Plugin {
   return {
-    name: 'css-as-string',
+    name: 'css-to-string',
     enforce: 'pre',
-    resolveId(id, importer) {
-      // Resolve relative CSS imports
-      if (id.endsWith('.css') && importer) {
-        const resolved = resolve(dirname(importer), id);
-        if (resolved.endsWith('/index.css') && resolved.includes('/styles/')) {
-          return resolved + '?inline-css';
-        }
-      }
-    },
     async load(id) {
-      if (id.endsWith('?inline-css')) {
-        const realId = id.replace('?inline-css', '');
-        const css = fs.readFileSync(realId, 'utf-8');
+      // Only process our specific CSS file with ?raw suffix
+      if (id.includes('/styles/index.css?raw')) {
+        // Read the actual CSS file (without ?raw)
+        const cssPath = id.replace('?raw', '');
+        const code = fs.readFileSync(cssPath, 'utf-8');
+        
         // Process CSS with PostCSS
-        const result = await postcss([autoprefixer(), tailwindcss()]).process(css, { from: realId });
-        // Return as a JS module
+        const result = await postcss([autoprefixer(), tailwindcss()]).process(code, { 
+          from: cssPath,
+          to: undefined
+        });
+        
+        // Return processed CSS as a JavaScript string export
         return {
-          code: `export default ${JSON.stringify(result.css)}`,
+          code: `export default ${JSON.stringify(result.css)};`,
           map: null
         };
-      }
-    },
-    transform(code, id) {
-      // Skip CSS transformation for our inline CSS
-      if (id.endsWith('?inline-css')) {
-        return null; // Let our load hook handle it
       }
     }
   };
@@ -50,7 +42,7 @@ export default defineConfig({
       fileName: 'embedpdf',
     },
   },
-  plugins: [cssAsString(), dts()],
+  plugins: [cssToString(), dts()],
   resolve: {
     alias: {
       '@': resolve(__dirname, './src'),

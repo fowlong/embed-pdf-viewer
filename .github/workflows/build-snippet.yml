@@ -14,7 +14,10 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
 
     steps:
       - name: Checkout repository
@@ -40,6 +43,12 @@ jobs:
         working-directory: ./snippet
         run: pnpm run build
 
-      - name: Verify build output
+      - name: Verify build output (Unix)
+        if: runner.os != 'Windows'
         working-directory: ./snippet
         run: ls -l dist
+
+      - name: Verify build output (Windows)
+        if: runner.os == 'Windows'
+        working-directory: ./snippet
+        run: dir dist
