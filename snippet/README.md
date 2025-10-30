@@ -1,14 +1,52 @@
-<div align="center">
-  <a href="https://www.embedpdf.com">
-    <img alt="EmbedPDF logo" src="https://www.embedpdf.com/logo-192.png" height="96">
-  </a>
+# Embed PDF Viewer - Snippet
 
-  <h1>EmbedPDF Snippet</h1>
-  <p>The easiest way to embed PDF files in your website with a complete, ready‑to‑use interface.</p>
+This directory contains the source code for the `embed-pdf-viewer` snippet. You can use this to build the snippet locally and integrate it into your project without relying on a CDN.
 
-  <a href="https://www.embedpdf.com/docs/snippet/introduction"><img alt="Documentation" src="https://img.shields.io/badge/View%20Docs-0af?style=for-the-badge&labelColor=000000"></a>
-  <a href="https://snippet.embedpdf.com/"><img alt="Live Demo" src="https://img.shields.io/badge/Try%20Live%20Demo-ff1493.svg?style=for-the-badge&labelColor=000000"></a>
-</div>
+## Local Development and Usage
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org/) (v18 or later recommended)
+- [pnpm](https://pnpm.io/) (or npm/yarn)
+
+### Building the Snippet
+
+1.  **Navigate to the snippet directory:**
+    ```bash
+    cd snippet
+    ```
+
+2.  **Install dependencies:**
+    ```bash
+    pnpm install
+    ```
+
+3.  **Build the snippet:**
+    ```bash
+    pnpm run build
+    ```
+
+    This will compile the TypeScript source and create a `dist` directory containing the bundled JavaScript (`embedpdf.js`) and its type definitions.
+
+### Running the Example Locally
+
+After building the snippet, you can run the `index.html` example to see it in action. Since the example uses ES Modules, you need to serve the files using a local web server.
+
+1.  **Install a local web server (if you don't have one):**
+    ```bash
+    pnpm add -g http-server
+    ```
+
+2.  **Start the server from the `snippet` directory:**
+    ```bash
+    http-server .
+    ```
+
+3.  **Open your browser** and navigate to the URL provided by the server (usually `http://localhost:8080`). You should see the example page with the PDF viewer loaded.
+
+### Integrating into Your Project
+
+After running the `build` command, you can copy the contents of the `snippet/dist` directory into your own project and import it as shown in the `index.html` example.
 
 ---
 
@@ -22,7 +60,7 @@ The full walkthrough, advanced examples, and API reference live in our docs site
 
 ## 🚀 Introduction
 
-**EmbedPDF Snippet** is a *“batteries‑included”* drop‑in that turns any `<div>` into a professional PDF reader. No build step, no framework lock‑in—just copy, paste, and you’re done.
+**EmbedPDF Snippet** is a *"batteries‑included"* drop‑in that turns any `<div>` into a professional PDF reader. No build step, no framework lock‑in—just copy, paste, and you're done.
 
 ### Why choose the Snippet?
 
@@ -51,7 +89,7 @@ Add the CDN module and point it at a container:
 </script>
 ```
 
-That’s it—refresh and enjoy a full‑featured viewer.
+That's it—refresh and enjoy a full‑featured viewer.
 
 ---
 

@@ -1,21 +1,21 @@
 {
-  "include": ["src/**/*"],
-  "exclude": ["dist", "node_modules"],
   "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["src/*"]
-    },
-    "target": "ESNext",
+    "target": "ES2020",
+    "useDefineForClassFields": true,
     "module": "ESNext",
-    "strict": true,
-    "jsx": "react",
-    "jsxFactory": "h",
-    "jsxFragmentFactory": "Fragment",
-    "outDir": "dist",
-    "declaration": true,
-    "declarationMap": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "skipLibCheck": true,
     "moduleResolution": "bundler",
-    "allowSyntheticDefaultImports": true
-  }
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "jsx": "react-jsx",
+    "jsxImportSource": "preact"
+  },
+  "include": ["src"]
 }
