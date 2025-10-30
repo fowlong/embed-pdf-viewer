@@ -1,0 +1,54 @@
+name: Build Snippet
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'snippet/**'
+      - 'packages/**'
+  pull_request:
+    paths:
+      - 'snippet/**'
+      - 'packages/**'
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+          cache-dependency-path: 'pnpm-lock.yaml'
+
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build workspace packages
+        run: pnpm run build:packages
+
+      - name: Build snippet
+        working-directory: ./snippet
+        run: pnpm run build
+
+      - name: Verify build output (Unix)
+        if: runner.os != 'Windows'
+        working-directory: ./snippet
+        run: ls -l dist
+
+      - name: Verify build output (Windows)
+        if: runner.os == 'Windows'
+        working-directory: ./snippet
+        run: dir dist

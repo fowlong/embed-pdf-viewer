@@ -1,5 +1,5 @@
 import { h, Fragment } from 'preact';
-import styles from '../styles/index.css';
+import styles from '../styles/index.css?raw';
 import { EmbedPDF } from '@embedpdf/core/preact';
 import { createPluginRegistration } from '@embedpdf/core';
 import { usePdfiumEngine } from '@embedpdf/engines/preact';
