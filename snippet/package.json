@@ -1,5 +1,5 @@
 {
-  "name": "embed-pdf-viewer-snippet",
+  "name": "@embedpdf/snippet",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -35,7 +35,8 @@
     "@embedpdf/plugin-capture": "workspace:*",
     "@embedpdf/plugin-history": "workspace:*",
     "@embedpdf/plugin-redaction": "workspace:*",
-    "preact": "^10.17.0"
+    "preact": "^10.17.0",
+    "@floating-ui/dom": "^1.6.13"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.0.6",

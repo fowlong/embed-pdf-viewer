@@ -11,9 +11,11 @@ This directory contains the source code for the `embed-pdf-viewer` snippet. You 
 
 ### Building the Snippet
 
-1.  **Navigate to the snippet directory:**
+**Note:** This snippet is part of a monorepo. Before building the snippet, you need to build the workspace packages it depends on.
+
+1.  **Navigate to the repository root:**
     ```bash
-    cd snippet
+    cd embed-pdf-viewer
     ```
 
 2.  **Install dependencies:**
@@ -21,8 +23,14 @@ This directory contains the source code for the `embed-pdf-viewer` snippet. You 
     pnpm install
     ```
 
-3.  **Build the snippet:**
+3.  **Build workspace packages:**
     ```bash
+    pnpm run build:packages
+    ```
+
+4.  **Build the snippet:**
+    ```bash
+    cd snippet
     pnpm run build
     ```
 

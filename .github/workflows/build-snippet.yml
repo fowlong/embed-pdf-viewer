@@ -6,17 +6,15 @@ on:
       - main
     paths:
       - 'snippet/**'
+      - 'packages/**'
   pull_request:
     paths:
       - 'snippet/**'
+      - 'packages/**'
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
-    defaults:
-      run:
-        working-directory: ./snippet
 
     steps:
       - name: Checkout repository
@@ -27,7 +25,7 @@ jobs:
         with:
           node-version: '20'
           cache: 'pnpm'
-          cache-dependency-path: 'snippet/pnpm-lock.yaml'
+          cache-dependency-path: 'pnpm-lock.yaml'
 
       - name: Install pnpm
         run: npm install -g pnpm
@@ -35,8 +33,13 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Build workspace packages
+        run: pnpm run build:packages
+
       - name: Build snippet
+        working-directory: ./snippet
         run: pnpm run build
 
       - name: Verify build output
+        working-directory: ./snippet
         run: ls -l dist
